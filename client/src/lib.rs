@@ -9,7 +9,7 @@ pub use specs::Entity as EcsEntity;
 
 use common::{
     comp,
-    msg::{ClientMsg, ClientState, ServerInfo, ServerMsg},
+    msg::{chat::MAX_MSG_STRLEN, ClientMsg, ClientState, ServerInfo, ServerMsg},
     net::PostBox,
     state::State,
 };
@@ -338,7 +338,11 @@ impl Client {
                             .duration_since(self.last_server_ping)
                             .as_secs_f64()
                     }
-                    ServerMsg::Chat(msg) => frontend_events.push(Event::Chat(msg)),
+                    ServerMsg::Chat(msg) => {
+                        if msg.len() <= MAX_MSG_STRLEN {
+                            frontend_events.push(Event::Chat(msg))
+                        }
+                    }
                     ServerMsg::SetPlayerEntity(uid) => {
                         self.entity = self.state.ecs().entity_from_uid(uid).unwrap()
                     } // TODO: Don't unwrap here!

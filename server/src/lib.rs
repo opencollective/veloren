@@ -14,7 +14,7 @@ use crate::{
 };
 use common::{
     comp,
-    msg::{ClientMsg, ClientState, RequestStateError, ServerInfo, ServerMsg},
+    msg::{chat::MAX_MSG_STRLEN, ClientMsg, ClientState, RequestStateError, ServerInfo, ServerMsg},
     net::PostOffice,
     state::{State, Uid},
     terrain::{TerrainChunk, TerrainChunkSize},
@@ -520,7 +520,11 @@ impl Server {
                             ClientState::Registered
                             | ClientState::Spectator
                             | ClientState::Dead
-                            | ClientState::Character => new_chat_msgs.push((Some(entity), msg)),
+                            | ClientState::Character => {
+                                if msg.len() <= MAX_MSG_STRLEN {
+                                    new_chat_msgs.push((Some(entity), msg))
+                                }
+                            }
                             ClientState::Pending => {}
                         },
                         ClientMsg::PlayerAnimation(animation_info) => {
