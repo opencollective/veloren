@@ -129,10 +129,8 @@ impl<'a> Widget for Chat<'a> {
             {
                 let mut input = str.to_owned();
                 input.retain(|c| c != '\n');
-                if (input.len() <= MAX_INPUT_STRLEN) {
-                    state.update(|s| {
-                    s.input = input
-                });
+                if input.len() <= MAX_INPUT_STRLEN {
+                    state.update(|s| s.input = input);
                 }
             }
         }
