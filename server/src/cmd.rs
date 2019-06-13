@@ -5,7 +5,7 @@
 use crate::Server;
 use common::{
     comp,
-    msg::{chat::MAX_ALIAS_STRLEN, ServerMsg},
+    msg::{chat::MAX_ALIAS_LEN, ServerMsg},
     npc::{get_npc_name, NpcKind},
 };
 use specs::{Builder, Entity as EcsEntity, Join};
@@ -174,7 +174,7 @@ fn handle_alias(server: &mut Server, entity: EcsEntity, args: String, action: &C
                 .write_storage::<comp::Player>()
                 .get_mut(entity)
                 .map(|player| {
-                    if alias.len() <= MAX_ALIAS_STRLEN {
+                    if alias.len() <= MAX_ALIAS_LEN {
                         player.alias = alias
                     } else {
                         clients.notify(
@@ -182,7 +182,7 @@ fn handle_alias(server: &mut Server, entity: EcsEntity, args: String, action: &C
                             ServerMsg::Chat(format!(
                                 "Alias is too long: {} characters\nmax alias length is {} characters",
                                 alias.len(),
-                                MAX_ALIAS_STRLEN
+                                MAX_ALIAS_LEN
                             )),
                         );
                     }

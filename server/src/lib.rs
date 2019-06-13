@@ -14,7 +14,7 @@ use crate::{
 };
 use common::{
     comp,
-    msg::{chat::MAX_MSG_STRLEN, ClientMsg, ClientState, RequestStateError, ServerInfo, ServerMsg},
+    msg::{chat::MAX_MSG_LEN, ClientMsg, ClientState, RequestStateError, ServerInfo, ServerMsg},
     net::PostOffice,
     state::{State, Uid},
     terrain::{TerrainChunk, TerrainChunkSize},
@@ -521,7 +521,7 @@ impl Server {
                             | ClientState::Spectator
                             | ClientState::Dead
                             | ClientState::Character => {
-                                if msg.len() <= MAX_MSG_STRLEN {
+                                if msg.len() <= MAX_MSG_LEN {
                                     new_chat_msgs.push((Some(entity), msg))
                                 }
                             }

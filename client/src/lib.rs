@@ -9,7 +9,7 @@ pub use specs::Entity as EcsEntity;
 
 use common::{
     comp,
-    msg::{chat::MAX_MSG_STRLEN, ClientMsg, ClientState, ServerInfo, ServerMsg},
+    msg::{chat::MAX_MSG_LEN, ClientMsg, ClientState, ServerInfo, ServerMsg},
     net::PostBox,
     state::State,
 };
@@ -134,7 +134,9 @@ impl Client {
     /// Send a chat message to the server.
     #[allow(dead_code)]
     pub fn send_chat(&mut self, msg: String) {
-        self.postbox.send_message(ClientMsg::Chat(msg))
+        if (msg.len() <= MAX_MSG_LEN) {
+            self.postbox.send_message(ClientMsg::Chat(msg))
+        }
     }
 
     /// Jump locally, the new positions will be synced to the server
@@ -339,7 +341,7 @@ impl Client {
                             .as_secs_f64()
                     }
                     ServerMsg::Chat(msg) => {
-                        if msg.len() <= MAX_MSG_STRLEN {
+                        if msg.len() <= MAX_MSG_LEN {
                             frontend_events.push(Event::Chat(msg))
                         }
                     }
