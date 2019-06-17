@@ -543,7 +543,7 @@ impl FigureMgr {
                             ),
                             comp::Animation::Run => character::RunAnimation::update_skeleton(
                                 state.skeleton_mut(),
-                                (vel.0.magnitude(), time),
+                                (vel.linear.magnitude(), time),
                                 animation_info.time,
                             ),
                             comp::Animation::Jump => character::JumpAnimation::update_skeleton(
@@ -563,7 +563,7 @@ impl FigureMgr {
                             ),
                             comp::Animation::Crun => character::CrunAnimation::update_skeleton(
                                 state.skeleton_mut(),
-                                (vel.0.magnitude(), time),
+                                (vel.linear.magnitude(), time),
                                 animation_info.time,
                             ),
                             comp::Animation::Cidle => character::CidleAnimation::update_skeleton(
@@ -574,7 +574,7 @@ impl FigureMgr {
                             comp::Animation::Gliding => {
                                 character::GlidingAnimation::update_skeleton(
                                     state.skeleton_mut(),
-                                    (vel.0.magnitude(), time),
+                                    (vel.linear.magnitude(), time),
                                     animation_info.time,
                                 )
                             }
@@ -591,7 +591,7 @@ impl FigureMgr {
                         let target_skeleton = match animation_info.animation {
                             comp::Animation::Run => quadruped::RunAnimation::update_skeleton(
                                 state.skeleton_mut(),
-                                (vel.0.magnitude(), time),
+                                (vel.linear.magnitude(), time),
                                 animation_info.time,
                             ),
                             comp::Animation::Idle => quadruped::IdleAnimation::update_skeleton(
@@ -601,7 +601,7 @@ impl FigureMgr {
                             ),
                             comp::Animation::Jump => quadruped::JumpAnimation::update_skeleton(
                                 state.skeleton_mut(),
-                                (vel.0.magnitude(), time),
+                                (vel.linear.magnitude(), time),
                                 animation_info.time,
                             ),
 
@@ -623,7 +623,7 @@ impl FigureMgr {
                         let target_skeleton = match animation_info.animation {
                             comp::Animation::Run => quadrupedmedium::RunAnimation::update_skeleton(
                                 state.skeleton_mut(),
-                                (vel.0.magnitude(), time),
+                                (vel.linear.magnitude(), time),
                                 animation_info.time,
                             ),
                             comp::Animation::Idle => {
@@ -636,7 +636,7 @@ impl FigureMgr {
                             comp::Animation::Jump => {
                                 quadrupedmedium::JumpAnimation::update_skeleton(
                                     state.skeleton_mut(),
-                                    (vel.0.magnitude(), time),
+                                    (vel.linear.magnitude(), time),
                                     animation_info.time,
                                 )
                             }
